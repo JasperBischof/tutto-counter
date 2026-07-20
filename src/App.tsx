@@ -1,121 +1,93 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { nanoid } from 'nanoid'
+import type { GameState, Player } from './types'
+import { applyTurn, createGame } from './gameLogic'
+import { PlayerSetup } from './components/PlayerSetup'
+import { TurnScreen } from './components/TurnScreen'
+import { GameOver } from './components/GameOver'
+
+function createPlayer(): Player {
+  return { id: nanoid(), name: '' }
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [players, setPlayers] = useState<Player[]>([createPlayer(), createPlayer()])
+  const [game, setGame] = useState<GameState | null>(null)
+
+  function addPlayer() {
+    setPlayers((prev) => (prev.length >= 10 ? prev : [...prev, createPlayer()]))
+  }
+
+  function removePlayer(id: string) {
+    setPlayers((prev) => (prev.length <= 2 ? prev : prev.filter((player) => player.id !== id)))
+  }
+
+  function renamePlayer(id: string, name: string) {
+    setPlayers((prev) => prev.map((player) => (player.id === id ? { ...player, name } : player)))
+  }
+
+  function movePlayer(id: string, direction: 'up' | 'down') {
+    setPlayers((prev) => {
+      const index = prev.findIndex((player) => player.id === id)
+      const swapWith = direction === 'up' ? index - 1 : index + 1
+      if (swapWith < 0 || swapWith >= prev.length) return prev
+
+      const next = [...prev]
+      ;[next[index], next[swapWith]] = [next[swapWith], next[index]]
+      return next
+    })
+  }
+
+  function startRound() {
+    const namedPlayers = players.map((player, index) => ({
+      ...player,
+      name: player.name.trim() || `Player ${index + 1}`,
+    }))
+    setGame(createGame(namedPlayers))
+  }
+
+  function restart() {
+    setGame(null)
+  }
+
+  if (!game) {
+    return (
+      <PlayerSetup
+        players={players}
+        onAdd={addPlayer}
+        onRemove={removePlayer}
+        onRename={renamePlayer}
+        onMove={movePlayer}
+        onStart={startRound}
+      />
+    )
+  }
+
+  if (game.winner) {
+    return (
+      <GameOver
+        players={game.players}
+        scores={game.scores}
+        pointsHistory={game.pointsHistory}
+        winner={game.winner}
+        onRestart={restart}
+      />
+    )
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <TurnScreen
+      key={game.turnNumber}
+      players={game.players}
+      scores={game.scores}
+      pointsHistory={game.pointsHistory}
+      activePlayerIndex={game.activePlayerIndex}
+      isFinalRound={game.finalRoundTriggeredBy !== null}
+      onSkip={() => setGame((current) => applyTurn(current!, 0, null, false))}
+      onComplete={(points, card, reachedTutto) =>
+        setGame((current) => applyTurn(current!, points, card, reachedTutto))
+      }
+    />
   )
 }
 
