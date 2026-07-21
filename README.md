@@ -1,34 +1,36 @@
-# React + TypeScript + Vite
+# Tutto Counter
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A simple score counter for the dice game **Tutto**, built as a mobile-friendly web app.
 
-Currently, two official plugins are available:
+Instead of tracking scores on paper, players enter points at the end of each turn and the app handles the rest: turn order, running totals, per-turn history, and win conditions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Add 2–10 players and set turn order before starting
+- Numeric keypad for quick score entry each turn
+- Special card support (`Insta-Win`, `Swap 1000`) with their own scoring rules
+- Automatic final-round handling once a player reaches the winning score (6000 points)
+- Scoreboard view with per-turn point history for every player
+- Game-over screen showing the winner
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tech Stack
 
-Note: This will impact Vite dev & build performances.
+- [React 19](https://react.dev/) + TypeScript
+- [Vite](https://vite.dev/) for dev/build tooling
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Oxlint](https://oxc.rs/) for linting
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Other scripts:
+
+```bash
+npm run build    # type-check and build for production
+npm run preview  # preview the production build locally
+npm run lint      # run oxlint
+```
