@@ -4,6 +4,8 @@ A simple score counter for the dice game **Tutto**, built as a mobile-friendly w
 
 Instead of tracking scores on paper, players enter points at the end of each turn and the app handles the rest: turn order, running totals, per-turn history, and win conditions.
 
+https://jasperbischof.github.io/tutto-counter
+
 ## Features
 
 - Add 2–10 players and set turn order before starting
