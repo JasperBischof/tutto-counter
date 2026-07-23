@@ -14,6 +14,12 @@ const CARD_LABELS: Record<Exclude<Card, null>, string> = {
   street: 'street',
   firework: 'firework',
   skip: 'skip',
+  'bonus-100': 'bonus +100',
+  'bonus-200': 'bonus +200',
+  'bonus-300': 'bonus +300',
+  'bonus-400': 'bonus +400',
+  'bonus-500': 'bonus +500',
+  'bonus-600': 'bonus +600',
 }
 
 export function Scoreboard({ players, scores, pointsHistory, cardHistory, activePlayerId }: Props) {

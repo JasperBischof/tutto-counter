@@ -1,4 +1,16 @@
-export type Card = 'insta-win' | 'swap-1000' | 'street' | 'firework' | 'skip' | null
+export type Card =
+  | 'insta-win'
+  | 'swap-1000'
+  | 'street'
+  | 'firework'
+  | 'skip'
+  | 'bonus-100'
+  | 'bonus-200'
+  | 'bonus-300'
+  | 'bonus-400'
+  | 'bonus-500'
+  | 'bonus-600'
+  | null
 
 export type Player = {
   id: string

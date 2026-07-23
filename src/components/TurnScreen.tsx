@@ -3,6 +3,15 @@ import type { Card, Player } from '../types'
 import { Keypad } from './Keypad'
 import { Scoreboard } from './Scoreboard'
 
+const BONUS_CARDS = [
+  'bonus-100',
+  'bonus-200',
+  'bonus-300',
+  'bonus-400',
+  'bonus-500',
+  'bonus-600',
+] as const satisfies readonly Exclude<Card, null>[]
+
 type Props = {
   players: Player[]
   scores: Record<string, number>
@@ -37,9 +46,10 @@ export function TurnScreen({
     setStep('confirm')
   }
 
-  // Firework asks nothing — it just tags the turn while entry continues normally.
-  function toggleFirework() {
-    setCard((prev) => (prev === 'firework' ? null : 'firework'))
+  // Firework and the bonus cards ask nothing — they just tag the turn while
+  // entry continues normally, so pressing one again untags it.
+  function toggleTag(value: Exclude<Card, null>) {
+    setCard((prev) => (prev === value ? null : value))
   }
 
   function submitEntry() {
@@ -103,7 +113,7 @@ export function TurnScreen({
             </button>
             <button
               type="button"
-              onClick={toggleFirework}
+              onClick={() => toggleTag('firework')}
               className={`flex-1 rounded border py-2 ${card === 'firework' ? 'bg-purple-600 text-white' : ''}`}
             >
               firework
@@ -132,6 +142,19 @@ export function TurnScreen({
             >
               insta win
             </button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 text-sm">
+            {BONUS_CARDS.map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => toggleTag(value)}
+                className={`rounded border py-2 ${card === value ? 'bg-purple-600 text-white' : ''}`}
+              >
+                +{value.replace('bonus-', '')}
+              </button>
+            ))}
           </div>
 
           <Keypad

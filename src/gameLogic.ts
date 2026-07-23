@@ -4,6 +4,15 @@ const WINNING_SCORE = 6000
 const SWAP_AMOUNT = 1000
 const STREET_AMOUNT = 2000
 
+const BONUS_AMOUNTS: Partial<Record<Exclude<Card, null>, number>> = {
+  'bonus-100': 100,
+  'bonus-200': 200,
+  'bonus-300': 300,
+  'bonus-400': 400,
+  'bonus-500': 500,
+  'bonus-600': 600,
+}
+
 export function createGame(players: Player[]): GameState {
   const scores: Record<string, number> = {}
   const pointsHistory: Record<string, number[]> = {}
@@ -32,6 +41,8 @@ export function createGame(players: Player[]): GameState {
 // - 'street' asks "reached street?" for that turn
 // - 'firework' asks nothing; it's just a label on a normally-scored turn
 // - 'skip' asks nothing; the player draws it and scores nothing that turn
+// - 'bonus-100'..'bonus-600' ask nothing; they add their named amount on top
+//   of whatever the player scored that turn
 export function applyTurn(
   state: GameState,
   pointsScored: number,
@@ -49,6 +60,10 @@ export function applyTurn(
 
   if (card === 'street' && reachedTutto) {
     scores[activePlayer.id] += STREET_AMOUNT
+  }
+
+  if (card && BONUS_AMOUNTS[card]) {
+    scores[activePlayer.id] += BONUS_AMOUNTS[card]
   }
 
   // Recorded as the active player's actual net gain this turn, since a swap
