@@ -85,7 +85,7 @@ function App() {
       cardHistory={game.cardHistory}
       activePlayerIndex={game.activePlayerIndex}
       isFinalRound={game.finalRoundTriggeredBy !== null}
-      onSkip={() => setGame((current) => applyTurn(current!, 0, null, false))}
+      onSkip={() => setGame((current) => applyTurn(current!, 0, 'skip', false))}
       onComplete={(points, card, reachedTutto) =>
         setGame((current) => applyTurn(current!, points, card, reachedTutto))
       }

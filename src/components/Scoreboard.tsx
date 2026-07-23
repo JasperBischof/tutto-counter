@@ -13,6 +13,7 @@ const CARD_LABELS: Record<Exclude<Card, null>, string> = {
   'insta-win': 'insta win',
   street: 'street',
   firework: 'firework',
+  skip: 'skip',
 }
 
 export function Scoreboard({ players, scores, pointsHistory, cardHistory, activePlayerId }: Props) {

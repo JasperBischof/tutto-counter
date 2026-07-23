@@ -31,6 +31,7 @@ export function createGame(players: Player[]): GameState {
 // - 'insta-win' asks "reached tutto twice in a row?"
 // - 'street' asks "reached street?" for that turn
 // - 'firework' asks nothing; it's just a label on a normally-scored turn
+// - 'skip' asks nothing; the player draws it and scores nothing that turn
 export function applyTurn(
   state: GameState,
   pointsScored: number,
