@@ -69,6 +69,7 @@ function App() {
         players={game.players}
         scores={game.scores}
         pointsHistory={game.pointsHistory}
+        cardHistory={game.cardHistory}
         winner={game.winner}
         onRestart={restart}
       />
@@ -81,6 +82,7 @@ function App() {
       players={game.players}
       scores={game.scores}
       pointsHistory={game.pointsHistory}
+      cardHistory={game.cardHistory}
       activePlayerIndex={game.activePlayerIndex}
       isFinalRound={game.finalRoundTriggeredBy !== null}
       onSkip={() => setGame((current) => applyTurn(current!, 0, null, false))}

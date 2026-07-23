@@ -6,15 +6,18 @@ const SWAP_AMOUNT = 1000
 export function createGame(players: Player[]): GameState {
   const scores: Record<string, number> = {}
   const pointsHistory: Record<string, number[]> = {}
+  const cardHistory: Record<string, Card[]> = {}
   for (const player of players) {
     scores[player.id] = 0
     pointsHistory[player.id] = []
+    cardHistory[player.id] = []
   }
 
   return {
     players,
     scores,
     pointsHistory,
+    cardHistory,
     activePlayerIndex: 0,
     turnNumber: 0,
     winner: null,
@@ -50,12 +53,18 @@ export function applyTurn(
     ],
   }
 
+  const cardHistory = {
+    ...state.cardHistory,
+    [activePlayer.id]: [...state.cardHistory[activePlayer.id], card],
+  }
+
   // Insta win always ends the game right away, skipping the final round.
   if (card === 'insta-win' && reachedTutto) {
     return {
       ...state,
       scores,
       pointsHistory,
+      cardHistory,
       winner: activePlayer,
       turnNumber: state.turnNumber + 1,
     }
@@ -80,6 +89,7 @@ export function applyTurn(
     ...state,
     scores,
     pointsHistory,
+    cardHistory,
     winner,
     finalRoundTriggeredBy,
     turnNumber: state.turnNumber + 1,

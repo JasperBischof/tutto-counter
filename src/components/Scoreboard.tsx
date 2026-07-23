@@ -1,13 +1,19 @@
-import type { Player } from '../types'
+import type { Card, Player } from '../types'
 
 type Props = {
   players: Player[]
   scores: Record<string, number>
   pointsHistory: Record<string, number[]>
+  cardHistory: Record<string, Card[]>
   activePlayerId?: string
 }
 
-export function Scoreboard({ players, scores, pointsHistory, activePlayerId }: Props) {
+const CARD_LABELS: Record<Exclude<Card, null>, string> = {
+  'swap-1000': '+-1000',
+  'insta-win': 'insta win',
+}
+
+export function Scoreboard({ players, scores, pointsHistory, cardHistory, activePlayerId }: Props) {
   const highestScore = Math.max(...players.map((player) => scores[player.id]))
   const turnCount = Math.max(0, ...players.map((player) => pointsHistory[player.id].length))
   const turns = Array.from({ length: turnCount }, (_, index) => index)
@@ -34,11 +40,15 @@ export function Scoreboard({ players, scores, pointsHistory, activePlayerId }: P
           {turns.map((turn) => (
             <tr key={turn}>
               <td className="border px-2 py-1">{turn + 1}</td>
-              {players.map((player) => (
-                <td key={player.id} className="border px-2 py-1 text-right">
-                  {pointsHistory[player.id][turn] ?? ''}
-                </td>
-              ))}
+              {players.map((player) => {
+                const card = cardHistory[player.id][turn]
+                return (
+                  <td key={player.id} className="border px-2 py-1 text-right">
+                    {pointsHistory[player.id][turn] ?? ''}
+                    {card && <div className="text-xs text-gray-500">{CARD_LABELS[card]}</div>}
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>

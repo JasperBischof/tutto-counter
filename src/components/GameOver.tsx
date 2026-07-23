@@ -1,15 +1,16 @@
-import type { Player } from '../types'
+import type { Card, Player } from '../types'
 import { Scoreboard } from './Scoreboard'
 
 type Props = {
   players: Player[]
   scores: Record<string, number>
   pointsHistory: Record<string, number[]>
+  cardHistory: Record<string, Card[]>
   winner: Player
   onRestart: () => void
 }
 
-export function GameOver({ players, scores, pointsHistory, winner, onRestart }: Props) {
+export function GameOver({ players, scores, pointsHistory, cardHistory, winner, onRestart }: Props) {
   return (
     <div className="mx-auto flex min-h-svh max-w-sm flex-col gap-6 p-4">
       <h1 className="text-center text-3xl font-bold">Tutto Counter</h1>
@@ -19,7 +20,12 @@ export function GameOver({ players, scores, pointsHistory, winner, onRestart }: 
         </span>
       </p>
 
-      <Scoreboard players={players} scores={scores} pointsHistory={pointsHistory} />
+      <Scoreboard
+        players={players}
+        scores={scores}
+        pointsHistory={pointsHistory}
+        cardHistory={cardHistory}
+      />
 
       <button
         type="button"

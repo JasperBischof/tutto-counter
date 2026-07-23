@@ -7,6 +7,7 @@ type Props = {
   players: Player[]
   scores: Record<string, number>
   pointsHistory: Record<string, number[]>
+  cardHistory: Record<string, Card[]>
   activePlayerIndex: number
   isFinalRound: boolean
   onSkip: () => void
@@ -17,6 +18,7 @@ export function TurnScreen({
   players,
   scores,
   pointsHistory,
+  cardHistory,
   activePlayerIndex,
   isFinalRound,
   onSkip,
@@ -72,6 +74,7 @@ export function TurnScreen({
           players={players}
           scores={scores}
           pointsHistory={pointsHistory}
+          cardHistory={cardHistory}
           activePlayerId={activePlayer.id}
         />
       )}

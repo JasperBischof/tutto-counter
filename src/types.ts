@@ -10,6 +10,8 @@ export type GameState = {
   scores: Record<string, number>
   // Points scored on each of a player's turns, in order, for the scoreboard's turn-by-turn table.
   pointsHistory: Record<string, number[]>
+  // Card drawn (if any) on each of a player's turns, parallel to pointsHistory.
+  cardHistory: Record<string, Card[]>
   activePlayerIndex: number
   turnNumber: number
   winner: Player | null
