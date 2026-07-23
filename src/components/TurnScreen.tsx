@@ -127,14 +127,14 @@ export function TurnScreen({
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => onComplete(Number(digits || '0'), card, true)}
+              onClick={() => onComplete(0, card, true)}
               className="flex-1 rounded border py-3"
             >
               yes
             </button>
             <button
               type="button"
-              onClick={() => onComplete(Number(digits || '0'), card, false)}
+              onClick={() => onComplete(0, card, false)}
               className="flex-1 rounded border py-3"
             >
               no
