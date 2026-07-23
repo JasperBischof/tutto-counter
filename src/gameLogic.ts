@@ -36,13 +36,18 @@ export function applyTurn(
   const scores = { ...state.scores }
   scores[activePlayer.id] += pointsScored
 
-  const pointsHistory = {
-    ...state.pointsHistory,
-    [activePlayer.id]: [...state.pointsHistory[activePlayer.id], pointsScored],
-  }
-
   if (card === 'swap-1000' && reachedTutto) {
     applySwapCard(scores, activePlayer.id)
+  }
+
+  // Recorded as the active player's actual net gain this turn, since a swap
+  // card changes their score without that amount ever passing through pointsScored.
+  const pointsHistory = {
+    ...state.pointsHistory,
+    [activePlayer.id]: [
+      ...state.pointsHistory[activePlayer.id],
+      scores[activePlayer.id] - state.scores[activePlayer.id],
+    ],
   }
 
   // Insta win always ends the game right away, skipping the final round.
