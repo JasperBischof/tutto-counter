@@ -1,4 +1,4 @@
-export type Card = 'insta-win' | 'swap-1000' | null
+export type Card = 'insta-win' | 'swap-1000' | 'street' | 'firework' | null
 
 export type Player = {
   id: string

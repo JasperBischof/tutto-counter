@@ -31,15 +31,20 @@ export function TurnScreen({
 
   const activePlayer = players[activePlayerIndex]
 
-  // Drawing a card asks the tutto question right away; a plain number never does.
-  function chooseCard(value: Exclude<Card, null>) {
+  // Drawing swap-1000, street, or insta-win asks a yes/no question right away.
+  function chooseCard(value: Exclude<Card, 'firework' | null>) {
     setCard(value)
     setStep('confirm')
   }
 
+  // Firework asks nothing — it just tags the turn while entry continues normally.
+  function toggleFirework() {
+    setCard((prev) => (prev === 'firework' ? null : 'firework'))
+  }
+
   function submitEntry() {
     if (digits === '') return
-    onComplete(Number(digits), null, false)
+    onComplete(Number(digits), card, false)
   }
 
   return (
@@ -98,10 +103,27 @@ export function TurnScreen({
             </button>
             <button
               type="button"
+              onClick={toggleFirework}
+              className={`flex-1 rounded border py-2 ${card === 'firework' ? 'bg-purple-600 text-white' : ''}`}
+            >
+              firework
+            </button>
+          </div>
+
+          <div className="flex gap-2 text-sm">
+            <button
+              type="button"
               onClick={() => chooseCard('swap-1000')}
               className="flex-1 rounded border py-2"
             >
               +-1000
+            </button>
+            <button
+              type="button"
+              onClick={() => chooseCard('street')}
+              className="flex-1 rounded border py-2"
+            >
+              street
             </button>
             <button
               type="button"
@@ -124,7 +146,11 @@ export function TurnScreen({
         <>
           <p className="text-center text-lg">{activePlayer.name}'s turn</p>
           <p className="text-center font-medium">
-            {card === 'insta-win' ? 'reached tutto twice in a row?' : 'reached tutto?'}
+            {card === 'insta-win'
+              ? 'reached tutto twice in a row?'
+              : card === 'street'
+                ? 'reached street?'
+                : 'reached tutto?'}
           </p>
 
           <div className="flex gap-3">

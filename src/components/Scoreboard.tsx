@@ -11,6 +11,8 @@ type Props = {
 const CARD_LABELS: Record<Exclude<Card, null>, string> = {
   'swap-1000': '+-1000',
   'insta-win': 'insta win',
+  street: 'street',
+  firework: 'firework',
 }
 
 export function Scoreboard({ players, scores, pointsHistory, cardHistory, activePlayerId }: Props) {

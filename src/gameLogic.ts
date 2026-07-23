@@ -2,6 +2,7 @@ import type { Card, GameState, Player } from './types'
 
 const WINNING_SCORE = 6000
 const SWAP_AMOUNT = 1000
+const STREET_AMOUNT = 2000
 
 export function createGame(players: Player[]): GameState {
   const scores: Record<string, number> = {}
@@ -28,6 +29,8 @@ export function createGame(players: Player[]): GameState {
 // reachedTutto only matters when a card was drawn:
 // - 'swap-1000' asks "reached tutto?" for that turn
 // - 'insta-win' asks "reached tutto twice in a row?"
+// - 'street' asks "reached street?" for that turn
+// - 'firework' asks nothing; it's just a label on a normally-scored turn
 export function applyTurn(
   state: GameState,
   pointsScored: number,
@@ -41,6 +44,10 @@ export function applyTurn(
 
   if (card === 'swap-1000' && reachedTutto) {
     applySwapCard(scores, activePlayer.id)
+  }
+
+  if (card === 'street' && reachedTutto) {
+    scores[activePlayer.id] += STREET_AMOUNT
   }
 
   // Recorded as the active player's actual net gain this turn, since a swap
