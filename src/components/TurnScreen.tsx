@@ -58,7 +58,7 @@ export function TurnScreen({
   }
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-sm flex-col gap-6 p-4">
+    <div className="flex h-dvh w-dvw flex-col gap-2 p-4">
       <h1 className="text-center text-2xl font-bold">Tutto Counter</h1>
 
       {isFinalRound && (
@@ -96,72 +96,75 @@ export function TurnScreen({
 
       {tab === 'turn' && step === 'entry' && (
         <>
-          <p className="text-center text-lg">{activePlayer.name}'s turn</p>
+          <div className='flex flex-col justify-between flex-1'>
 
-          <button
-            type="button"
-            onClick={() => setDigits('')}
-            aria-label="Clear entered points"
-            className="rounded border py-3 text-center text-xl"
-          >
-            {digits || '0'}
-          </button>
+            <p className="text-center text-lg">{activePlayer.name}'s turn</p>
 
-          <div className="flex gap-2 text-sm">
-            <button type="button" onClick={onSkip} className="flex-1 rounded border py-2">
-              skip
-            </button>
             <button
               type="button"
-              onClick={() => toggleTag('firework')}
-              className={`flex-1 rounded border py-2 ${card === 'firework' ? 'bg-purple-600 text-white' : ''}`}
+              onClick={() => setDigits('')}
+              aria-label="Clear entered points"
+              className="rounded font-bold text-4xl py-3 text-center"
             >
-              firework
+              {digits || '0'}
             </button>
+            {/* card space */}
+            <div className='flex flex-col gap-2'>
+              <div className="flex gap-1">
+                <button type="button" onClick={onSkip} className="text-sm flex-1 rounded border py-2">
+                  skip
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleTag('firework')}
+                  className={`flex-1 text-sm rounded border py-2 ${card === 'firework' ? 'bg-purple-600 text-white' : ''}`}
+                >
+                  firework
+                </button>
+              </div>
+              <div className="flex gap-1 text-sm">
+                <button
+                  type="button"
+                  onClick={() => chooseCard('swap-1000')}
+                  className="flex-1 rounded border py-2 text-sm"
+                >
+                  +-1000
+                </button>
+                <button
+                  type="button"
+                  onClick={() => chooseCard('street')}
+                  className="flex-1 rounded border py-2 text-sm"
+                >
+                  street
+                </button>
+                <button
+                  type="button"
+                  onClick={() => chooseCard('insta-win')}
+                  className="flex-1 rounded border py-2"
+                >
+                  insta win
+                </button>
+              </div>
+              <div className="flex flex-1 gap-1">
+                {BONUS_CARDS.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => toggleTag(value)}
+                    className={`flex-1 text-sm rounded border py-2 ${card === value ? 'bg-purple-600 text-white' : ''}`}
+                  >
+                    +{value.replace('bonus-', '')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <Keypad
+              onDigit={(digit) => setDigits((prev) => prev + digit)}
+              onSubmit={submitEntry}
+              submitDisabled={digits === ''}
+            />
           </div>
-
-          <div className="flex gap-2 text-sm">
-            <button
-              type="button"
-              onClick={() => chooseCard('swap-1000')}
-              className="flex-1 rounded border py-2"
-            >
-              +-1000
-            </button>
-            <button
-              type="button"
-              onClick={() => chooseCard('street')}
-              className="flex-1 rounded border py-2"
-            >
-              street
-            </button>
-            <button
-              type="button"
-              onClick={() => chooseCard('insta-win')}
-              className="flex-1 rounded border py-2"
-            >
-              insta win
-            </button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-sm">
-            {BONUS_CARDS.map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => toggleTag(value)}
-                className={`rounded border py-2 ${card === value ? 'bg-purple-600 text-white' : ''}`}
-              >
-                +{value.replace('bonus-', '')}
-              </button>
-            ))}
-          </div>
-
-          <Keypad
-            onDigit={(digit) => setDigits((prev) => prev + digit)}
-            onSubmit={submitEntry}
-            submitDisabled={digits === ''}
-          />
         </>
       )}
 
