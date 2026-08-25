@@ -37,14 +37,21 @@ function renamePlayer(id: string, newName: string) {
   );
 }
 
-//Todo: moveplayer function
-// function movePlayer(id: string, direction: "up" | "down") {
-//   const index = players.value.findIndex((player) => player.id === id);
-//   if (index === -1) return;
-//   const newIndex = direction === "up" ? index - 1 : index +1;
-//   if (newIndex < 0 || newIndex >= players.value.length) return;
-//   const newPlayers = [...players.value];
-// }
+function movePlayer(id: string, direction: "up" | "down") {
+  const index = players.value.findIndex((player) => player.id === id);
+  if (index === -1) return;
+  const newIndex = direction === "up" ? index - 1 : index + 1;
+  if (newIndex < 0 || newIndex >= players.value.length) return;
+  const newPlayers = [...players.value];
+  const currentPlayer = newPlayers[index];
+  const targetPlayer = newPlayers[newIndex];
+
+  if (!currentPlayer || !targetPlayer) return;
+
+  newPlayers[index] = targetPlayer;
+  newPlayers[newIndex] = currentPlayer;
+  players.value = newPlayers;
+}
 
 function startRound() {
   const namedPlayers = players.value.map((player, index) => ({
@@ -68,6 +75,7 @@ function restart() {
       :removePlayer="removePlayer"
       :renamePlayer="renamePlayer"
       :onStart="startRound"
+      :movePlayer="movePlayer"
     />
     <GameOver
       v-else-if="game.winner"

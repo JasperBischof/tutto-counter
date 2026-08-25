@@ -8,7 +8,7 @@ defineProps<{
   addPlayer: () => void;
   removePlayer: (id: string) => void;
   renamePlayer: (id: string, newName: string) => void;
-  //onMove missing
+  movePlayer: (id: string, direction: "up" | "down") => void;
   onStart: () => void;
 }>();
 </script>
@@ -18,6 +18,10 @@ defineProps<{
     <h1>Tutto Counter</h1>
     <ul class="player-list">
       <li v-for="player in players" :key="player.id">
+        <div class="order-buttons">
+          <button @click="movePlayer(player.id, 'up')">U</button>
+          <button @click="movePlayer(player.id, 'down')">D</button>
+        </div>
         <input
           type="text"
           v-model="player.name"
@@ -44,6 +48,15 @@ defineProps<{
 </template>
 
 <style scoped>
+.order-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  button {
+    font-size: 0.825rem;
+    flex: 1;
+  }
+}
 .actionButtons {
   display: flex;
   gap: 0.5rem;
@@ -86,7 +99,7 @@ button {
 li {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 ul {
   display: flex;
