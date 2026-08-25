@@ -106,5 +106,3 @@ function restart() {
     "
   />
 </template>
-
-<style scoped></style>

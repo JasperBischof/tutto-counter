@@ -48,29 +48,3 @@ defineProps<{
     </button>
   </main>
 </template>
-
-<style scoped>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-.player-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  overflow-y: scroll;
-}
-.player-item {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-.order-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-</style>
