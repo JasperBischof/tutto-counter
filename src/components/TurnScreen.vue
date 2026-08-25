@@ -205,10 +205,7 @@ function submitEntry() {
 .screen {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 100vh;
-  padding: 16px;
-  box-sizing: border-box;
+  flex: 1;
 }
 
 .title {
