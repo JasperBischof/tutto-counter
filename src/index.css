@@ -2,6 +2,9 @@
   font-family: "SF Pro";
   src: url("./assets/SF-Pro.ttf");
 }
+:root {
+  font-size: 16px;
+}
 
 * {
   margin: 0;

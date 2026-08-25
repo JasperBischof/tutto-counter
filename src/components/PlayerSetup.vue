@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <div class="player-setup">
-    <h1>Player Setup</h1>
+    <h1>Tutto Counter</h1>
     <ul class="player-list">
       <li v-for="player in players" :key="player.id">
         <input

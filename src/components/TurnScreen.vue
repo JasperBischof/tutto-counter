@@ -55,8 +55,6 @@ function submitEntry() {
 
 <template>
   <div class="screen">
-    <h1 class="title">Tutto Counter</h1>
-
     <p v-if="props.isFinalRound" class="final-round">
       final round – highest score wins
     </p>
@@ -88,11 +86,12 @@ function submitEntry() {
     />
 
     <div v-else-if="step === 'entry'" class="turn-panel">
-      <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
-
-      <button type="button" class="display-value" @click="setDigits('')">
-        {{ digits || "0" }}
-      </button>
+      <div class="digit-panel">
+        <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
+        <button type="button" class="display-value" @click="setDigits('')">
+          {{ digits || "0" }}
+        </button>
+      </div>
 
       <div class="button-stack">
         <div class="row">
@@ -195,6 +194,14 @@ function submitEntry() {
 </template>
 
 <style scoped>
+.digit-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
 .screen {
   display: flex;
   flex-direction: column;
@@ -239,6 +246,7 @@ function submitEntry() {
 .tab-bar button {
   flex: 1;
   padding: 10px 12px;
+  font-size: 1rem;
 }
 
 .tab-bar button.active,
@@ -275,7 +283,8 @@ function submitEntry() {
 .button-stack {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .row,

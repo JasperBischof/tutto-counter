@@ -20,7 +20,8 @@ const NUMBER_KEYS = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
 
 <style scoped>
 .keypad {
-  height: 100%;
+  max-height: 16rem;
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
@@ -30,6 +31,7 @@ button {
   border: 1px solid #d1d5db;
   background-color: #ffffff;
   cursor: pointer;
+  font-size: 1rem;
 }
 button.zero {
   grid-column: 1 / span 2;
