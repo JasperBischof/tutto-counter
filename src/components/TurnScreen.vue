@@ -231,9 +231,8 @@ function submitEntry() {
 .display-value,
 .confirm-actions button {
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 0.5rem;
   background: #fff;
-  color: #111827;
   cursor: pointer;
 }
 

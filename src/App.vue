@@ -60,44 +60,53 @@ function restart() {
 </script>
 
 <template>
-  <PlayerSetup
-    v-if="!game"
-    :players="players"
-    :addPlayer="addPlayer"
-    :removePlayer="removePlayer"
-    :renamePlayer="renamePlayer"
-    :onStart="startRound"
-  />
-  <GameOver
-    v-else-if="game.winner"
-    :players="game.players"
-    :scores="game.scores"
-    :pointsHistory="game.pointsHistory"
-    :cardHistory="game.cardHistory"
-    :winner="game.winner"
-    :onRestart="restart"
-  />
-
-  <TurnScreen
-    v-else
-    :key="game.turnNumber"
-    :players="game.players"
-    :scores="game.scores"
-    :pointsHistory="game.pointsHistory"
-    :cardHistory="game.cardHistory"
-    :activePlayerIndex="game.activePlayerIndex"
-    :isFinalRound="game.finalRoundTriggeredBy !== null"
-    :onSkip="
-      () => {
-        game = applyTurn(game!, 0, null, true);
-      }
-    "
-    :onComplete="
-      (points, card, isSkip) => {
-        game = applyTurn(game!, points, card, isSkip);
-      }
-    "
-  />
+  <div id="appContainer">
+    <PlayerSetup
+      v-if="!game"
+      :players="players"
+      :addPlayer="addPlayer"
+      :removePlayer="removePlayer"
+      :renamePlayer="renamePlayer"
+      :onStart="startRound"
+    />
+    <GameOver
+      v-else-if="game.winner"
+      :players="game.players"
+      :scores="game.scores"
+      :pointsHistory="game.pointsHistory"
+      :cardHistory="game.cardHistory"
+      :winner="game.winner"
+      :onRestart="restart"
+    />
+    <TurnScreen
+      v-else
+      :key="game.turnNumber"
+      :players="game.players"
+      :scores="game.scores"
+      :pointsHistory="game.pointsHistory"
+      :cardHistory="game.cardHistory"
+      :activePlayerIndex="game.activePlayerIndex"
+      :isFinalRound="game.finalRoundTriggeredBy !== null"
+      :onSkip="
+        () => {
+          game = applyTurn(game!, 0, null, true);
+        }
+      "
+      :onComplete="
+        (points, card, isSkip) => {
+          game = applyTurn(game!, points, card, isSkip);
+        }
+      "
+    />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#appContainer {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

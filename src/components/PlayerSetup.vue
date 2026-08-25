@@ -16,7 +16,7 @@ defineProps<{
 <template>
   <div class="player-setup">
     <h2>Player Setup</h2>
-    <ul>
+    <ul class="player-list">
       <li v-for="player in players" :key="player.id">
         <input
           type="text"
@@ -40,3 +40,17 @@ defineProps<{
     </button>
   </div>
 </template>
+
+<style scoped>
+.player-setup {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.player-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+</style>
