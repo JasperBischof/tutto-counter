@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Player } from "../types";
+import type { Player } from "../../types";
 const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 10;
 
@@ -14,10 +14,10 @@ defineProps<{
 </script>
 
 <template>
-  <div class="player-setup">
+  <main>
     <h1>Tutto Counter</h1>
     <ul class="player-list">
-      <li v-for="player in players" :key="player.id">
+      <li class="player-item" v-for="player in players" :key="player.id">
         <div class="order-buttons">
           <button @click="movePlayer(player.id, 'up')">U</button>
           <button @click="movePlayer(player.id, 'down')">D</button>
@@ -39,8 +39,38 @@ defineProps<{
         Add Player
       </button>
     </ul>
-    <button @click="onStart" :disabled="players.length < MIN_PLAYERS">
+    <button
+      class="start-button"
+      @click="onStart"
+      :disabled="players.length < MIN_PLAYERS"
+    >
       Start Game
     </button>
-  </div>
+  </main>
 </template>
+
+<style scoped>
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: scroll;
+}
+.player-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.order-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+</style>

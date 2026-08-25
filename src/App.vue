@@ -3,9 +3,9 @@ import { ref } from "vue";
 import { nanoid } from "nanoid";
 import type { GameState, Player } from "./types";
 import { applyTurn, createGame } from "./gameLogic";
-import PlayerSetup from "./components/PlayerSetup.vue";
-import GameOver from "./components/GameOver.vue";
-import TurnScreen from "./components/TurnScreen.vue";
+import PlayerSetup from "./components/screens/PlayerSetup.vue";
+import GameOver from "./components/screens/GameOver.vue";
+import TurnScreen from "./components/screens/TurnScreen.vue";
 
 const players = ref<Player[]>([
   { id: nanoid(), name: "Franzi" },

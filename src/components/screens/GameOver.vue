@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Card, Player } from "../types";
+import type { Card, Player } from "../../types.ts";
 import Scoreboard from "./Scoreboard.vue";
 
 defineProps<{
