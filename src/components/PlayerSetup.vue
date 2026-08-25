@@ -39,72 +39,8 @@ defineProps<{
         Add Player
       </button>
     </ul>
-    <div class="actionButtons">
-      <button @click="onStart" :disabled="players.length < MIN_PLAYERS">
-        Start Game
-      </button>
-    </div>
+    <button @click="onStart" :disabled="players.length < MIN_PLAYERS">
+      Start Game
+    </button>
   </div>
 </template>
-
-<style scoped>
-.order-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  button {
-    font-size: 0.825rem;
-    flex: 1;
-  }
-}
-.actionButtons {
-  display: flex;
-  gap: 0.5rem;
-  padding: 1rem;
-}
-.player-setup {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-}
-h1 {
-  padding: 1rem;
-}
-.player-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  gap: 0.5rem;
-  flex: 1;
-}
-input[type="text"] {
-  height: 3rem;
-  font-size: 1rem;
-  border: solid 1px hsl(0, 0%, 40%);
-  background-color: #fff;
-  border-radius: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-button {
-  height: 3rem;
-  font-size: 1rem;
-  border: solid 1px hsl(0, 0%, 40%);
-  background-color: #fff;
-  border-radius: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-li {
-  display: flex;
-  flex-direction: row;
-  gap: 0.25rem;
-}
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-}
-</style>
