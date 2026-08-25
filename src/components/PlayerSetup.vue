@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <div class="player-setup">
-    <h2>Player Setup</h2>
+    <h1>Player Setup</h1>
     <ul class="player-list">
       <li v-for="player in players" :key="player.id">
         <input
@@ -31,26 +31,66 @@ defineProps<{
           Remove
         </button>
       </li>
+      <button v-if="players.length < MAX_PLAYERS" @click="addPlayer">
+        Add Player
+      </button>
     </ul>
-    <button @click="addPlayer" :disabled="players.length >= MAX_PLAYERS">
-      Add Player
-    </button>
-    <button @click="onStart" :disabled="players.length < MIN_PLAYERS">
-      Start Game
-    </button>
+    <div class="actionButtons">
+      <button @click="onStart" :disabled="players.length < MIN_PLAYERS">
+        Start Game
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
 .player-setup {
   display: flex;
   flex: 1;
   flex-direction: column;
+  align-items: center;
+}
+h1 {
+  padding: 1rem;
 }
 .player-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  gap: 0.5rem;
   flex: 1;
+}
+input[type="text"] {
+  height: 3rem;
+  font-size: 1rem;
+  border: solid 1px hsl(0, 0%, 40%);
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+button {
+  height: 3rem;
+  font-size: 1rem;
+  border: solid 1px hsl(0, 0%, 40%);
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+li {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 </style>
