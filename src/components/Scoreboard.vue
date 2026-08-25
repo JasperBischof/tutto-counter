@@ -15,6 +15,7 @@ const CARD_LABELS: Record<Exclude<Card, null>, string> = {
   street: "street",
   firework: "firework",
   skip: "skip",
+  "double-points": "points x2",
   "bonus-100": "bonus +100",
   "bonus-200": "bonus +200",
   "bonus-300": "bonus +300",

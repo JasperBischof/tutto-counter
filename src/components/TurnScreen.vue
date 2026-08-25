@@ -107,6 +107,14 @@ function submitEntry() {
           >
             firework
           </button>
+          <button
+            type="button"
+            :class="{ active: card === 'double-points' }"
+            class="action-button"
+            @click="toggleTag('double-points')"
+          >
+            points x2
+          </button>
         </div>
 
         <div class="row">

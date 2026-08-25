@@ -62,12 +62,19 @@ export function applyTurn(
     applySwapCard(scores, activePlayerId);
   }
 
+  if (card === "double-points") {
+    // The base points are already added above, so this card must add only one
+    // more equal chunk to make the turn total double the entered value.
+    scores[activePlayerId] = (scores[activePlayerId] ?? 0) + pointsScored;
+  }
+
   if (card === "street" && reachedTutto) {
     scores[activePlayerId] = (scores[activePlayerId] ?? 0) + STREET_AMOUNT;
   }
 
   if (card && BONUS_AMOUNTS[card]) {
-    scores[activePlayerId] = (scores[activePlayerId] ?? 0) + BONUS_AMOUNTS[card]!;
+    scores[activePlayerId] =
+      (scores[activePlayerId] ?? 0) + BONUS_AMOUNTS[card]!;
   }
 
   // Recorded as the active player's actual net gain this turn, since a swap
@@ -103,7 +110,9 @@ export function applyTurn(
   // boundary — the final round ends there, not back at the trigger's seat.
   const finalRoundTriggeredBy =
     state.finalRoundTriggeredBy ??
-    ((scores[activePlayerId] ?? 0) >= WINNING_SCORE ? state.activePlayerIndex : null);
+    ((scores[activePlayerId] ?? 0) >= WINNING_SCORE
+      ? state.activePlayerIndex
+      : null);
 
   const nextPlayerIndex = (state.activePlayerIndex + 1) % state.players.length;
   const finalRoundComplete =
@@ -140,7 +149,11 @@ function pickWinner(
   if (!trigger) {
     return { id: "", name: "Player 1" };
   }
-  return contenders.find((player) => player.id === trigger.id) ?? contenders[0] ?? trigger;
+  return (
+    contenders.find((player) => player.id === trigger.id) ??
+    contenders[0] ??
+    trigger
+  );
 }
 
 // The active player always gains 1000. The player(s) with the most points
