@@ -7,4 +7,5 @@
 
 * {
   font-family: "SF Pro";
+  touch-action: manipulation;
 }

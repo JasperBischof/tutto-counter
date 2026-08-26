@@ -54,22 +54,24 @@ function submitEntry() {
 </script>
 
 <template>
-  <div class="screen">
+  <section class="flex flex-col w-full h-full">
     <p v-if="props.isFinalRound" class="final-round">
       final round – highest score wins
     </p>
 
-    <div class="tab-bar">
+    <div class="bg-slate-200 flex gap-2 rounded-full">
       <button
+        class="flex-1 cursor-pointer rounded-full"
         type="button"
-        :class="{ active: tab === 'turn' }"
+        :class="{ 'bg-slate-400': tab === 'turn' }"
         @click="tab = 'turn'"
       >
         turn
       </button>
       <button
+        class="flex-1 cursor-pointer rounded-full"
         type="button"
-        :class="{ active: tab === 'scoreboard' }"
+        :class="{ 'bg-slate-400': tab === 'scoreboard' }"
         @click="tab = 'scoreboard'"
       >
         scoreboard
@@ -85,68 +87,78 @@ function submitEntry() {
       :activePlayerId="activePlayer?.id"
     />
 
-    <div v-else-if="step === 'entry'" class="turn-panel">
-      <div class="digit-panel">
-        <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
-        <button type="button" class="display-value" @click="setDigits('')">
+    <div v-else-if="step === 'entry'" class="flex flex-col">
+      <!-- turn and score area -->
+      <div class="flex flex-col items-center py-4">
+        <p class="text-4xl font-bold py-4">{{ activePlayer?.name }}'s turn</p>
+        <button
+          type="button"
+          class="border rounded w-full h-12 text-2xl"
+          @click="setDigits('')"
+        >
           {{ digits || "0" }}
         </button>
       </div>
 
-      <div class="button-stack">
-        <div class="row">
-          <button type="button" class="action-button" @click="props.onSkip">
+      <!-- cards stack -->
+      <div id="card-stack" class="py-8 flex gap-2 flex-col">
+        <div class="flex flex-row gap-1">
+          <button
+            type="button"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+            @click="props.onSkip"
+          >
             skip
           </button>
           <button
             type="button"
-            :class="{ active: card === 'firework' }"
-            class="action-button"
+            :class="{ 'bg-slate-400': card === 'firework' }"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="toggleTag('firework')"
           >
             firework
           </button>
           <button
             type="button"
-            :class="{ active: card === 'double-points' }"
-            class="action-button"
+            :class="{ 'bg-slate-400': card === 'double-points' }"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="toggleTag('double-points')"
           >
             points x2
           </button>
         </div>
 
-        <div class="row">
+        <div class="flex flex-row gap-1">
           <button
             type="button"
-            class="action-button"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="chooseCard('swap-1000')"
           >
             +-1000
           </button>
           <button
             type="button"
-            class="action-button"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="chooseCard('street')"
           >
             street
           </button>
           <button
             type="button"
-            class="action-button"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="chooseCard('insta-win')"
           >
             insta win
           </button>
         </div>
 
-        <div class="bonus-row">
+        <div class="flex flex-row gap-1">
           <button
             v-for="value in BONUS_CARDS"
             :key="value"
             type="button"
-            :class="{ active: card === value }"
-            class="bonus-button"
+            :class="{ 'bg-slate-400': card === value }"
+            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
             @click="toggleTag(value)"
           >
             +{{ value.replace("bonus-", "") }}
@@ -190,5 +202,5 @@ function submitEntry() {
         </button>
       </div>
     </div>
-  </div>
+  </section>
 </template>
