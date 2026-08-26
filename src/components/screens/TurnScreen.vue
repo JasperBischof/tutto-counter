@@ -54,14 +54,15 @@ function submitEntry() {
 </script>
 
 <template>
-  <section class="flex flex-col w-full h-full">
+  <section class="flex flex-col flex-1">
     <p v-if="props.isFinalRound" class="final-round">
       final round – highest score wins
     </p>
 
+    <!-- tab bar -->
     <div class="bg-slate-200 flex gap-2 rounded-full">
       <button
-        class="flex-1 cursor-pointer rounded-full"
+        class="flex-1 cursor-pointer rounded-full h-12"
         type="button"
         :class="{ 'bg-slate-400': tab === 'turn' }"
         @click="tab = 'turn'"
@@ -69,7 +70,7 @@ function submitEntry() {
         turn
       </button>
       <button
-        class="flex-1 cursor-pointer rounded-full"
+        class="flex-1 cursor-pointer rounded-full h-12"
         type="button"
         :class="{ 'bg-slate-400': tab === 'scoreboard' }"
         @click="tab = 'scoreboard'"
@@ -87,8 +88,8 @@ function submitEntry() {
       :activePlayerId="activePlayer?.id"
     />
 
-    <div v-else-if="step === 'entry'" class="flex flex-col">
-      <!-- turn and score area -->
+    <!-- turn and score area -->
+    <div v-if="tab === 'turn'" class="flex flex-col flex-1">
       <div class="flex flex-col items-center py-4">
         <p class="text-4xl font-bold py-4">{{ activePlayer?.name }}'s turn</p>
         <button
@@ -101,7 +102,7 @@ function submitEntry() {
       </div>
 
       <!-- cards stack -->
-      <div id="card-stack" class="py-8 flex gap-2 flex-col">
+      <div id="card-stack" class="py-8 flex flex-1 gap-2 flex-col justify-end">
         <div class="flex flex-row gap-1">
           <button
             type="button"
@@ -165,41 +166,41 @@ function submitEntry() {
           </button>
         </div>
       </div>
-
       <Keypad
+        v-if="step === 'entry'"
         :onDigit="appendDigit"
         :onSubmit="submitEntry"
         :submitDisabled="digits === ''"
       />
-    </div>
 
-    <div v-else class="confirm-panel">
-      <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
-      <p class="confirm-question">
-        {{
-          card === "insta-win"
-            ? "reached tutto twice in a row?"
-            : card === "street"
-              ? "reached street?"
-              : "reached tutto?"
-        }}
-      </p>
+      <div v-else class="confirm-panel">
+        <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
+        <p class="confirm-question">
+          {{
+            card === "insta-win"
+              ? "reached tutto twice in a row?"
+              : card === "street"
+                ? "reached street?"
+                : "reached tutto?"
+          }}
+        </p>
 
-      <div class="confirm-actions">
-        <button
-          type="button"
-          class="action-button"
-          @click="props.onComplete(0, card, true)"
-        >
-          yes
-        </button>
-        <button
-          type="button"
-          class="action-button"
-          @click="props.onComplete(0, card, false)"
-        >
-          no
-        </button>
+        <div class="confirm-actions">
+          <button
+            type="button"
+            class="action-button"
+            @click="props.onComplete(0, card, true)"
+          >
+            yes
+          </button>
+          <button
+            type="button"
+            class="action-button"
+            @click="props.onComplete(0, card, false)"
+          >
+            no
+          </button>
+        </div>
       </div>
     </div>
   </section>
