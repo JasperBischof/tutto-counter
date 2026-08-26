@@ -97,7 +97,7 @@ function restart() {
       :isFinalRound="game.finalRoundTriggeredBy !== null"
       :onSkip="
         () => {
-          game = applyTurn(game!, 0, null, true);
+          game = applyTurn(game!, 0, 'skip', true);
         }
       "
       :onComplete="
