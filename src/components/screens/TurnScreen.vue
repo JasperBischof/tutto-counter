@@ -107,7 +107,7 @@ function submitEntry() {
           <div class="flex flex-row gap-1">
             <button
               type="button"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-2"
               @click="props.onSkip"
             >
               skip
@@ -115,7 +115,7 @@ function submitEntry() {
             <button
               type="button"
               :class="{ 'bg-slate-400': card === 'firework' }"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="toggleTag('firework')"
             >
               firework
@@ -123,7 +123,7 @@ function submitEntry() {
             <button
               type="button"
               :class="{ 'bg-slate-400': card === 'double-points' }"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="toggleTag('double-points')"
             >
               points x2
@@ -133,21 +133,21 @@ function submitEntry() {
           <div class="flex flex-row gap-1">
             <button
               type="button"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="chooseCard('swap-1000')"
             >
               +-1000
             </button>
             <button
               type="button"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="chooseCard('street')"
             >
               street
             </button>
             <button
               type="button"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="chooseCard('insta-win')"
             >
               insta win
@@ -160,7 +160,7 @@ function submitEntry() {
               :key="value"
               type="button"
               :class="{ 'bg-slate-400': card === value }"
-              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              class="text-sm rounded-full px-2 py-1 bg-slate-100 active:bg-slate-200 flex-1"
               @click="toggleTag(value)"
             >
               +{{ value.replace("bonus-", "") }}
