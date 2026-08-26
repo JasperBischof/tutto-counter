@@ -78,7 +78,9 @@ const turns = Array.from({ length: turnCount }, (_, index) => index);
           class="flex-1 font-bold text-right text-sm"
           v-for="player in props.players"
           :key="player.id"
-          :class="{ winner: props.scores[player.id] === highestScore }"
+          :class="{
+            'text-orange-500': props.scores[player.id] === highestScore,
+          }"
         >
           {{ props.scores[player.id] ?? 0 }}
         </td>
