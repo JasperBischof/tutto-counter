@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import type { Card, Player } from "../../types.ts";
-import Keypad from "../Keypad.vue";
+import Keypad from "../ui_elements/Keypad.vue";
 import Scoreboard from "./Scoreboard.vue";
 
 const props = defineProps<{

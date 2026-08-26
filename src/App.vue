@@ -67,42 +67,44 @@ function restart() {
 </script>
 
 <template>
-  <PlayerSetup
-    v-if="!game"
-    :players="players"
-    :addPlayer="addPlayer"
-    :removePlayer="removePlayer"
-    :renamePlayer="renamePlayer"
-    :onStart="startRound"
-    :movePlayer="movePlayer"
-  />
-  <GameOver
-    v-else-if="game.winner"
-    :players="game.players"
-    :scores="game.scores"
-    :pointsHistory="game.pointsHistory"
-    :cardHistory="game.cardHistory"
-    :winner="game.winner"
-    :onRestart="restart"
-  />
-  <TurnScreen
-    v-else
-    :key="game.turnNumber"
-    :players="game.players"
-    :scores="game.scores"
-    :pointsHistory="game.pointsHistory"
-    :cardHistory="game.cardHistory"
-    :activePlayerIndex="game.activePlayerIndex"
-    :isFinalRound="game.finalRoundTriggeredBy !== null"
-    :onSkip="
-      () => {
-        game = applyTurn(game!, 0, null, true);
-      }
-    "
-    :onComplete="
-      (points, card, isSkip) => {
-        game = applyTurn(game!, points, card, isSkip);
-      }
-    "
-  />
+  <main class="w-dvw h-dvh flex p-2">
+    <PlayerSetup
+      v-if="!game"
+      :players="players"
+      :addPlayer="addPlayer"
+      :removePlayer="removePlayer"
+      :renamePlayer="renamePlayer"
+      :onStart="startRound"
+      :movePlayer="movePlayer"
+    />
+    <GameOver
+      v-else-if="game.winner"
+      :players="game.players"
+      :scores="game.scores"
+      :pointsHistory="game.pointsHistory"
+      :cardHistory="game.cardHistory"
+      :winner="game.winner"
+      :onRestart="restart"
+    />
+    <TurnScreen
+      v-else
+      :key="game.turnNumber"
+      :players="game.players"
+      :scores="game.scores"
+      :pointsHistory="game.pointsHistory"
+      :cardHistory="game.cardHistory"
+      :activePlayerIndex="game.activePlayerIndex"
+      :isFinalRound="game.finalRoundTriggeredBy !== null"
+      :onSkip="
+        () => {
+          game = applyTurn(game!, 0, null, true);
+        }
+      "
+      :onComplete="
+        (points, card, isSkip) => {
+          game = applyTurn(game!, points, card, isSkip);
+        }
+      "
+    />
+  </main>
 </template>
