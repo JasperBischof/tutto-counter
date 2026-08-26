@@ -23,7 +23,7 @@ defineProps<{
         v-for="player in players"
         :key="player.id"
       >
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
           <button
             class="border rounded h-8 w-8"
             @click="movePlayer(player.id, 'up')"
@@ -38,7 +38,7 @@ defineProps<{
           </button>
         </div>
         <input
-          class="flex-1 p-2 border rounded"
+          class="w-full p-2 border rounded"
           type="text"
           v-model="player.name"
           @input="renamePlayer(player.id, player.name)"

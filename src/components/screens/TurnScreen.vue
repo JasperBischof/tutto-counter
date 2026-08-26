@@ -60,7 +60,7 @@ function submitEntry() {
     </p>
 
     <!-- tab bar -->
-    <div class="bg-slate-200 flex gap-2 rounded-full">
+    <div class="bg-slate-200 flex rounded-full">
       <button
         class="flex-1 cursor-pointer rounded-full h-12"
         type="button"
@@ -87,10 +87,10 @@ function submitEntry() {
       :cardHistory="props.cardHistory"
       :activePlayerId="activePlayer?.id"
     />
-
-    <!-- turn and score area -->
+    <!-- whole turn screen -->
     <div v-if="tab === 'turn'" class="flex flex-col flex-1">
-      <div class="flex flex-col items-center py-4">
+      <!-- turn and score area -->
+      <div class="flex flex-col items-center py-4 flex-1 justify-center">
         <p class="text-4xl font-bold py-4">{{ activePlayer?.name }}'s turn</p>
         <button
           type="button"
@@ -102,104 +102,106 @@ function submitEntry() {
       </div>
 
       <!-- cards stack -->
-      <div id="card-stack" class="py-8 flex flex-1 gap-2 flex-col justify-end">
-        <div class="flex flex-row gap-1">
-          <button
-            type="button"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="props.onSkip"
-          >
-            skip
-          </button>
-          <button
-            type="button"
-            :class="{ 'bg-slate-400': card === 'firework' }"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="toggleTag('firework')"
-          >
-            firework
-          </button>
-          <button
-            type="button"
-            :class="{ 'bg-slate-400': card === 'double-points' }"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="toggleTag('double-points')"
-          >
-            points x2
-          </button>
+      <div id="keypad_and_cardsstack" class="flex flex-1 flex-col gap-2">
+        <div id="card-stack" class="flex gap-2 flex-col">
+          <div class="flex flex-row gap-1">
+            <button
+              type="button"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="props.onSkip"
+            >
+              skip
+            </button>
+            <button
+              type="button"
+              :class="{ 'bg-slate-400': card === 'firework' }"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="toggleTag('firework')"
+            >
+              firework
+            </button>
+            <button
+              type="button"
+              :class="{ 'bg-slate-400': card === 'double-points' }"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="toggleTag('double-points')"
+            >
+              points x2
+            </button>
+          </div>
+
+          <div class="flex flex-row gap-1">
+            <button
+              type="button"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="chooseCard('swap-1000')"
+            >
+              +-1000
+            </button>
+            <button
+              type="button"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="chooseCard('street')"
+            >
+              street
+            </button>
+            <button
+              type="button"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="chooseCard('insta-win')"
+            >
+              insta win
+            </button>
+          </div>
+
+          <div class="flex flex-row gap-1">
+            <button
+              v-for="value in BONUS_CARDS"
+              :key="value"
+              type="button"
+              :class="{ 'bg-slate-400': card === value }"
+              class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
+              @click="toggleTag(value)"
+            >
+              +{{ value.replace("bonus-", "") }}
+            </button>
+          </div>
         </div>
+        <Keypad
+          v-if="step === 'entry'"
+          :onDigit="appendDigit"
+          :onSubmit="submitEntry"
+          :submitDisabled="digits === ''"
+        />
+        <!-- confirmation for cards where tutto is necessary -->
+        <div v-else class="h-64">
+          <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
+          <p class="confirm-question">
+            {{
+              card === "insta-win"
+                ? "reached tutto twice in a row?"
+                : card === "street"
+                  ? "reached street?"
+                  : "reached tutto?"
+            }}
+          </p>
 
-        <div class="flex flex-row gap-1">
-          <button
-            type="button"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="chooseCard('swap-1000')"
-          >
-            +-1000
-          </button>
-          <button
-            type="button"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="chooseCard('street')"
-          >
-            street
-          </button>
-          <button
-            type="button"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="chooseCard('insta-win')"
-          >
-            insta win
-          </button>
-        </div>
-
-        <div class="flex flex-row gap-1">
-          <button
-            v-for="value in BONUS_CARDS"
-            :key="value"
-            type="button"
-            :class="{ 'bg-slate-400': card === value }"
-            class="text-sm rounded-full px-2 py-1 bg-slate-200 flex-1"
-            @click="toggleTag(value)"
-          >
-            +{{ value.replace("bonus-", "") }}
-          </button>
-        </div>
-      </div>
-      <Keypad
-        v-if="step === 'entry'"
-        :onDigit="appendDigit"
-        :onSubmit="submitEntry"
-        :submitDisabled="digits === ''"
-      />
-
-      <div v-else class="confirm-panel">
-        <p class="turn-label">{{ activePlayer?.name }}'s turn</p>
-        <p class="confirm-question">
-          {{
-            card === "insta-win"
-              ? "reached tutto twice in a row?"
-              : card === "street"
-                ? "reached street?"
-                : "reached tutto?"
-          }}
-        </p>
-
-        <div class="confirm-actions">
-          <button
-            type="button"
-            class="action-button"
-            @click="props.onComplete(0, card, true)"
-          >
-            yes
-          </button>
-          <button
-            type="button"
-            class="action-button"
-            @click="props.onComplete(0, card, false)"
-          >
-            no
-          </button>
+          <div class="confirm-actions">
+            <button
+              type="button"
+              class="action-button"
+              @click="props.onComplete(0, card, true)"
+            >
+              yes
+            </button>
+            <button
+              type="button"
+              class="action-button"
+              @click="props.onComplete(0, card, false)"
+            >
+              no
+            </button>
+          </div>
         </div>
       </div>
     </div>

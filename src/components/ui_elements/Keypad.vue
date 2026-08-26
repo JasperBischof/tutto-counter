@@ -9,7 +9,7 @@ const NUMBER_KEYS = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
 </script>
 
 <template>
-  <section id="keypad" class="flex flex-1">
+  <section id="keypad" class="flex h-64">
     <div class="grid grid-cols-3 grid-rows-4 gap-1 w-full h-full">
       <button
         class="border rounded"
