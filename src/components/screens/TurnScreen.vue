@@ -55,10 +55,6 @@ function submitEntry() {
 
 <template>
   <section class="flex flex-col flex-1">
-    <p v-if="props.isFinalRound" class="final-round">
-      final round – highest score wins
-    </p>
-
     <!-- tab bar -->
     <div class="bg-slate-200 flex rounded-full">
       <button
@@ -78,6 +74,10 @@ function submitEntry() {
         scoreboard
       </button>
     </div>
+
+    <p v-if="props.isFinalRound" class="final-round">
+      final round – highest score wins
+    </p>
 
     <Scoreboard
       v-if="tab === 'scoreboard'"
