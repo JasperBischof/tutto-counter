@@ -43,7 +43,7 @@ const turns = Array.from({ length: turnCount }, (_, index) => index);
           class="flex-1 text-right text-sm"
           v-for="player in props.players"
           :key="player.id"
-          :class="{ 'text-purple-500': player.id === props.activePlayerId }"
+          :class="{ 'text-purple-700': player.id === props.activePlayerId }"
         >
           {{ player.name }}
         </th>
@@ -53,7 +53,7 @@ const turns = Array.from({ length: turnCount }, (_, index) => index);
       <tr class="flex" v-for="turn in turns" :key="turn">
         <td
           class="flex-1 max-w-16 text-sm"
-          :class="{ 'bg-slate-200': (turn + 1) % 2 === 0 }"
+          :class="{ 'bg-slate-100': (turn + 1) % 2 === 0 }"
         >
           {{ turn + 1 }}
         </td>
@@ -61,7 +61,7 @@ const turns = Array.from({ length: turnCount }, (_, index) => index);
           class="flex-1 flex flex-col text-right text-sm"
           v-for="player in props.players"
           :key="player.id"
-          :class="{ 'bg-slate-200': (turn + 1) % 2 === 0 }"
+          :class="{ 'bg-slate-100': (turn + 1) % 2 === 0 }"
         >
           <span>
             {{ props.pointsHistory[player.id]?.[turn] ?? 0 }}
