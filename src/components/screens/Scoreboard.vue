@@ -43,6 +43,7 @@ const turns = Array.from({ length: turnCount }, (_, index) => index);
           class="flex-1 text-right text-sm"
           v-for="player in props.players"
           :key="player.id"
+          :class="{ 'text-purple-500': player.id === props.activePlayerId }"
         >
           {{ player.name }}
         </th>
