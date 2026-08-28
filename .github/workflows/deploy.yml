@@ -1,37 +1,44 @@
-name: Deploy to GitHub Pages
+name: Deploy Vue.js Project to GitHub Pages
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push events but only for the main branch
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  # This workflow contains a single job called "deploy-project"
+  deploy-project:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - id: Build-Vue
-        uses: xRealNeon/VuePagesAction@1.0.1
-        with:
-          username: "YourGithubName"
-          reponame: "YourRepoName"
-          token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Sets up Node\.js in the environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: build project
+        run: npm run build
+
+      # Deploys the built project to the gh\-pages branch
+      - name: Deploy to GitHub Pages
+        run: |
+          cd dist
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "${{ github.actor }}"
+          git init
+          git add -A
+          git commit -m 'Automated deployment'
+          git push -f https://${{ github.actor }}:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
+        shell: bash
